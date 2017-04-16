@@ -1,5 +1,4 @@
-
-package maptest.model.locations;
+package maptest.api.serialize.routes;
 
 import java.util.List;
 
@@ -11,23 +10,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TransportLocationReponse {
+public class RoutesListResponse {
 
     @JsonProperty("result")
-    public List<TransportLocation> result = null;
-
+    public List<RouteResponse> result = null;
+    
     @JsonProperty("success")
     public boolean success;
 
-
-    public TransportLocationReponse() {
-    }
-
-    public TransportLocationReponse(List<TransportLocation> result, boolean success) {
-        this.result = result;
-        this.success = success;
-    }
-
+    
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
@@ -35,7 +26,8 @@ public class TransportLocationReponse {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(result).append(success).toHashCode();
+        return new HashCodeBuilder()
+            .append(result).append(success).toHashCode();
     }
 
     @Override
@@ -43,10 +35,12 @@ public class TransportLocationReponse {
         if (other == this) {
             return true;
         }
-        if ((other instanceof TransportLocationReponse) == false) {
+        if ((other instanceof RoutesListResponse) == false) {
             return false;
         }
-        TransportLocationReponse rhs = ((TransportLocationReponse) other);
-        return new EqualsBuilder().append(result, rhs.result).append(success, rhs.success).isEquals();
+        RoutesListResponse rhs = ((RoutesListResponse) other);
+        return new EqualsBuilder()
+            .append(result, rhs.result)
+            .append(success, rhs.success).isEquals();
     }
 }

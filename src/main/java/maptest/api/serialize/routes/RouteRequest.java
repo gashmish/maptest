@@ -1,13 +1,13 @@
-package maptest.model.routes;
+package maptest.api.serialize.routes;
 
-public class RouteIdentifier {
+public class RouteRequest {
     
     public int routeId;
     
     public int routeDirection;
 
     
-    public RouteIdentifier(int routeId, int routeDirection) {
+    public RouteRequest(int routeId, int routeDirection) {
         this.routeId = routeId;
         this.routeDirection = routeDirection;
     }
@@ -35,7 +35,7 @@ public class RouteIdentifier {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        RouteIdentifier other = (RouteIdentifier) obj;
+        RouteRequest other = (RouteRequest) obj;
         if (routeDirection != other.routeDirection)
             return false;
         if (routeId != other.routeId)

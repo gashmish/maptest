@@ -1,4 +1,4 @@
-package maptest.utils;
+package maptest.utils.lonlat;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

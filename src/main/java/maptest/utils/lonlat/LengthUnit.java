@@ -1,4 +1,4 @@
-package maptest.utils;
+package maptest.utils.lonlat;
 
 
 public enum LengthUnit {

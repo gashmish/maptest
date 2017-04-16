@@ -1,7 +1,8 @@
 package maptest.service.callback;
 
 import java.util.List;
-import maptest.service.data.Transport;
+
+import maptest.service.model.Transport;
 
 
 public interface NewTransportsAddedCallback {

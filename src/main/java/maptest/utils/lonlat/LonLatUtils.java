@@ -1,8 +1,8 @@
-package maptest.utils;
+package maptest.utils.lonlat;
 
 import java.util.Random;
 
-import maptest.model.LonLat;
+import maptest.api.serialize.LonLat;
 
 
 public class LonLatUtils {

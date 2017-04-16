@@ -1,4 +1,6 @@
-package maptest.model;
+package maptest.api.serialize;
+
+
 
 public class LonLatRectangle {
     

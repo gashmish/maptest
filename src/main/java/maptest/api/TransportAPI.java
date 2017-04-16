@@ -4,13 +4,13 @@ import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.List;
 
-import maptest.model.LonLat;
-import maptest.model.LonLatRectangle;
-import maptest.model.locations.TransportLocation;
-import maptest.model.locations.TransportLocationReponse;
-import maptest.model.routes.RouteIdentifier;
-import maptest.model.routes.TransportRoute;
-import maptest.model.routes.TransportRoutesResponce;
+import maptest.api.serialize.LonLat;
+import maptest.api.serialize.LonLatRectangle;
+import maptest.api.serialize.locations.LocationResponse;
+import maptest.api.serialize.locations.LocationsListResponse;
+import maptest.api.serialize.routes.RouteRequest;
+import maptest.api.serialize.routes.RouteResponse;
+import maptest.api.serialize.routes.RoutesListResponse;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -37,13 +37,13 @@ public class TransportAPI {
     }
 
     
-    public List<TransportLocation> getLocationsInRectangle(LonLatRectangle rectangle) {
+    public List<LocationResponse> getLocationsInRectangle(LonLatRectangle rectangle) {
 
         String query = serverString +
             "/vehicles/positions/?" +
             "transports=bus,trolley,tram&bbox=" +
-            rectangle.topLeft.lon       + "," +
-            rectangle.topLeft.lat       + "," +
+            rectangle.topLeft.lon     + "," +
+            rectangle.topLeft.lat     + "," +
             rectangle.bottomRight.lon + "," +
             rectangle.bottomRight.lat;
         
@@ -51,8 +51,8 @@ public class TransportAPI {
                 
         try {
             
-            TransportLocationReponse response =
-                getHttpResponse(query, TransportLocationReponse.class);
+            LocationsListResponse response =
+                getHttpResponse(query, LocationsListResponse.class);
             
             if (response.success) {
                 
@@ -72,14 +72,14 @@ public class TransportAPI {
     }
     
 
-    public List<TransportRoute> getRoutes(List<RouteIdentifier> routeIdentifier) {
+    public List<RouteResponse> getRoutes(List<RouteRequest> routeIdentifier) {
 
         String routes = "";
         String routeDirections = "";
         
         int i = 0;
         
-        for (RouteIdentifier routeId : routeIdentifier) {
+        for (RouteRequest routeId : routeIdentifier) {
             
             routes += routeId.routeId;
             routeDirections += routeId.routeDirection;
@@ -102,8 +102,8 @@ public class TransportAPI {
          
         try {
             
-            TransportRoutesResponce response =
-                getHttpResponse(query, TransportRoutesResponce.class);
+            RoutesListResponse response =
+                getHttpResponse(query, RoutesListResponse.class);
             
             if (response.success) {
                 
@@ -141,23 +141,23 @@ public class TransportAPI {
 
         TransportAPI access = new TransportAPI();
         
-        List<TransportLocation> transportLocations =
+        List<LocationResponse> transportLocations =
             access.getLocationsInRectangle(
                 new LonLatRectangle(
                     new LonLat(29.675824, 60.153766),
                     new LonLat(30.626141, 59.813023)));
         
-        for (TransportLocation location : transportLocations) {
+        for (LocationResponse location : transportLocations) {
             
             //System.out.println(location);
         }
         
-        List<TransportRoute> transportRoutes =
+        List<RouteResponse> transportRoutes =
             access.getRoutes(
                 Collections.singletonList(
-                    new RouteIdentifier(1278, 0)));
+                    new RouteRequest(1278, 0)));
         
-        for (TransportRoute route : transportRoutes) {
+        for (RouteResponse route : transportRoutes) {
             
             //System.out.println(route);
         }

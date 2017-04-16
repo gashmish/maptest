@@ -2,33 +2,44 @@ package maptest.utils;
 
 import java.awt.geom.Point2D;
 
-import maptest.model.LonLat;
+import maptest.api.serialize.LonLat;
 
+import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.GeodeticCalculator;
+import org.opengis.referencing.operation.TransformException;
 
-import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Coordinate;
 
 
 public class GeometryUtils {
 
-	/**
-	 * Отложить под углом angle от точки a точку на расстоянии meters.
-	 */
+    static GeodeticCalculator gc = new GeodeticCalculator();
+    
+
+    public static double getDistance(Coordinate a, Coordinate b) {
+        
+        try {
+            
+            gc.setStartingPosition(JTS.toDirectPosition(a, gc.getCoordinateReferenceSystem())) ;
+            gc.setDestinationPosition(JTS.toDirectPosition(b, gc.getCoordinateReferenceSystem()));
+        
+        } catch (TransformException e) {
+            e.printStackTrace();
+        }
+        
+        return gc.getOrthodromicDistance();
+    }
+    
 	public static LonLat getPointOnDirection(LonLat a, double angle, double meters) {
 
-		GeodeticCalculator geodeticCalculator = new GeodeticCalculator();
-
 		// get point on direction
-		geodeticCalculator.setStartingGeographicPoint(a.lon, a.lat);
-		geodeticCalculator.setDirection(angle, meters);
-		Point2D destination = geodeticCalculator.getDestinationGeographicPoint();
+	    gc.setStartingGeographicPoint(a.lon, a.lat);
+	    gc.setDirection(angle, meters);
+		Point2D destination = gc.getDestinationGeographicPoint();
 
 		return new LonLat(
 			destination.getX(),
 			destination.getY());
 	}
-
-
-	protected static GeometryFactory geometryFactory = new GeometryFactory();
-
+	
 }

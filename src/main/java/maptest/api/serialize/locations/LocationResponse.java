@@ -1,17 +1,15 @@
 
-package maptest.model.locations;
+package maptest.api.serialize.locations;
 
-import maptest.model.LonLat;
+import maptest.api.serialize.LonLat;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TransportLocation {
+public class LocationResponse {
 
     @JsonProperty("vehicleId")
     public int vehicleId;
@@ -44,10 +42,10 @@ public class TransportLocation {
     public String licensePlate;
     
     
-    public TransportLocation() {
+    public LocationResponse() {
     }
 
-    public TransportLocation(
+    public LocationResponse(
         String timestamp,
         LonLat position,
         int direction,
@@ -74,37 +72,5 @@ public class TransportLocation {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(timestamp).append(position)
-            .append(direction).append(routeId)
-            .append(vehicleLabel).append(velocity)
-            .append(vehicleId).append(orderNumber)
-            .append(licensePlate).append(directionId).toHashCode();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof TransportLocation) == false) {
-            return false;
-        }
-        TransportLocation rhs = ((TransportLocation) other);
-        return new EqualsBuilder()
-            .append(timestamp, rhs.timestamp)
-            .append(position, rhs.position)
-            .append(direction, rhs.direction)
-            .append(routeId, rhs.routeId)
-            .append(vehicleLabel, rhs.vehicleLabel)
-            .append(velocity, rhs.velocity)
-            .append(vehicleId, rhs.vehicleId)
-            .append(orderNumber, rhs.orderNumber)
-            .append(licensePlate, rhs.licensePlate)
-            .append(directionId, rhs.directionId).isEquals();
     }
 }
